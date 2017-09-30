@@ -43,8 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Io.cs" />
     <Compile Include="IoFunctions.cs" />
-    <Compile Include="IoMonad.cs" />
+    <Compile Include="IoBuilder.cs" />
     <Compile Include="IoResult.cs" />
     <Compile Include="Primitives.cs" />
     <Compile Include="Program.cs" />

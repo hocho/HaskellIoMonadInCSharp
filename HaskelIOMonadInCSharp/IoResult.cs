@@ -2,7 +2,7 @@
 namespace HaskellIoMonadInCSharp
 {
     /// <summary>
-    /// The result of invoking an IOMonad 
+    /// The result of invoking an IO
     /// </summary>
     public struct IoResult<T>
     {
