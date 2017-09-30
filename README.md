@@ -1,19 +1,22 @@
 # Understand the Haskell IO Monad using CSharp
 
-[Check out this page, for an understand of Haskell IO Monads and their raison d'être](https://wiki.haskell.org/IO_inside#.27.3E.3E.3D.27_and_.27do.27_notation)
+[Check out this page, if you are unfamiliar with Haskell IO Monads and their raison d'être](https://wiki.haskell.org/IO_inside#.27.3E.3E.3D.27_and_.27do.27_notation)
 
-Shows the underpinning of how the IO Monad works. The key to understanding the monad is that it a *container for a function* that takes a Unit and returns a value. 
+**Caveat emptor: I am not an expert in Haskell, this is my attempt to understand Monads in general and the IO monad in particular.**
 
-Take a look at the following artifacts, in order for a better understanding
-1. **Unit** and **ReadWorld** are primitives; empty structures, filling in for similar concepts in Haskell.
+This CSharp solution shows the underpinning of how the IO Monad works. The key to understanding the monad is that it is a *container which wraps a function that perform IO* and that the *container itself is a function*, which when unwrapped, invokes the wrapped function.
+
+Hera are the main artifacts, briefly explained in sequence
+1. **Unit** and **ReadWorld** are primitives; empty structures, filling in for similar concepts in Haskell. *Unit* is a tuple of 0 arity, representing nothing. *RealWorld* is the baton passed between IO function to force sequencing.
 2. **IoMonad** is a generic delegate, a function with takes a RealWorld and returns an IO Result.
-3. **IoResult** is a generic tuple holding the RealWorld and the result of an IO Action. The result could be Unit for cases like writing to the console, which do not return a result.
-4. The **Return** method, takes an IO function and returns an *IoMonad*, by wrapping it.
-5. **IoFunctions** like **GetLn** and **PutStrLn** create and return the corresponding *IoMonads* using the *Return* method.
+3. **IoResult** is a generic tuple holding the RealWorld and the result of an IO Action. The result could be *Unit* for cases like writing to the console, which does not return a result.
+4. The **Return** method, takes an IO function and creates an *IoMonad*, by wrapping it.
+5. **IoFunctions** like **GetLn** and **PutStrLn** create corresponding *IoMonads* using the *Return* method.
 6. The **Bind** method is the meat of the matter. 
-   * It invokes the *IoMonad* passed it to.
-   * Gets the next *IoMonad* by invoking the continuation passed to it, with a result of the previous invocation.
-   * Invokes the resulting *IoMonad*, and returns its result.
+   * It invokes the *IoMonad* **(a)** passed to it.
+   * Gets the next *IoMonad* **(b)** by invoking the continuation passed to it, with the result of the previous invocation.
+   * Invokes the resulting *IoMonad* **(b)**, and returns its result.
+   * *RealWorld* is passed around, to mimic how Haskell uses it in theory; in practice it is optimized away by the Haskell compiler.
 
 ```
 public static 
@@ -76,3 +79,7 @@ Bind(
                                 PutStrLn("Monadic Hello to " + line1 + " " + line2)))))
 (RealWorldValue);
 ```
+
+
+
+
