@@ -15,5 +15,64 @@ Take a look at the following artifacts, in order for a better understanding
    * Gets the next *IoMonad* by invoking the continuation passed to it, with a result of the previous invocation.
    * Invokes the resulting *IoMonad*, and returns its result.
 
-Ultimately, IO actions are chained together by passing binds as continuation to other binds. 
+```
+public static 
+IoMonad<TOut>
+Bind<TIn, TOut>(
+    IoMonad<TIn>        ioMonad,
+    Func<
+        TIn, 
+        IoMonad<TOut>>  getNextIoMonad)
+{
+    return 
+        realWorld => 
+        {
+            // invoke the ioMonad, by passing it the RealWorld
+            var resultIoMonad = ioMonad(realWorld);    
 
+            // get the next IO monad, by calling getNextIoMonad, with the result of the first IO action
+            var nextIoMonad = getNextIoMonad(resultIoMonad.Value);  
+
+            // invoke the nextiIoMonad, by passing it the RealWorld, returned by the first IO action 
+            var result = nextIoMonad(resultIoMonad.RealWorld);   
+
+            return result;
+        };
+}
+```
+
+**Finally, IO actions are chained together by passing binds as continuation to other binds.**
+
+```
+// PutStrLn("Enter your first name")
+// line1 <- GetLn 
+// PutStrLn("Enter your last name")
+// line2 <- GetLn 
+// PutStrLn("Monadic hello to " + line1 + " " + line2)
+
+Console.WriteLine();
+Console.WriteLine("---------------------------------------------------------------------");
+Console.WriteLine("Example 3.");
+Console.WriteLine("---------------------------------------------------------------------");
+Console.WriteLine(@"PutStrLn(""Enter your first name"")");
+Console.WriteLine("GetLn");
+Console.WriteLine(@"PutStrLn(""Enter your last name"")");
+Console.WriteLine("GetLn");
+Console.WriteLine(@"PutStrLn(""Monadic hello to "" + line1 + "" "" + line2)");
+Console.WriteLine();
+
+Bind(
+    PutStrLn("Enter your first name"),
+    _ =>
+        Bind(
+            GetLn(),
+            line1 =>
+                Bind(
+                    PutStrLn("Enter your last name"),
+                    __ =>
+                        Bind(
+                            GetLn(),
+                            line2 => 
+                                PutStrLn("Monadic Hello to " + line1 + " " + line2)))))
+(RealWorldValue);
+```
