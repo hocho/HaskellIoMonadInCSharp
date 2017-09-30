@@ -35,6 +35,16 @@ namespace HaskellIoMonadInCSharp
 
                     return result;
                 };
+
+            // Could be compressed to
+            //    return 
+            //        realWorld => 
+            //        {
+            //            var resultOfIo = io(realWorld);    
+
+            //            return getNextIo(resultOfIo.Value)(resultOfIo.RealWorld);
+            //        };
+
         }
 
         /// <summary>
