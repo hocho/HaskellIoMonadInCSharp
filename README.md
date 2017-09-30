@@ -8,36 +8,39 @@ This CSharp solution shows the underpinning of how the IO Monad works. The key t
 
 Hera are the main artifacts, briefly explained in sequence
 1. **Unit** and **ReadWorld** are primitives; empty structures, filling in for similar concepts in Haskell. *Unit* is a tuple of 0 arity, representing nothing. *RealWorld* is the baton passed between IO function to force sequencing.
-2. **IoMonad** is a generic delegate, a function with takes a RealWorld and returns an IO Result.
+2. **Io** is a generic delegate, a function with takes a RealWorld and returns an IO Result.
 3. **IoResult** is a generic tuple holding the RealWorld and the result of an IO Action. The result could be *Unit* for cases like writing to the console, which does not return a result.
-4. The **Return** method, takes an IO function and creates an *IoMonad*, by wrapping it.
+4. The **Return** method, takes an IO function and creates an *Io*, by wrapping it.
 5. **IoFunctions** like **GetLn** and **PutStrLn** create corresponding *IoMonads* using the *Return* method.
 6. The **Bind** method is the meat of the matter. 
-   * It invokes the *IoMonad* **(a)** passed to it.
-   * Gets the next *IoMonad* **(b)** by invoking the continuation passed to it, with the result of the previous invocation.
-   * Invokes the resulting *IoMonad* **(b)**, and returns its result.
+   * It invokes the *Io* **(a)** passed to it.
+   * Gets the next *Io* **(b)** by invoking the continuation passed to it, with the result of the previous invocation.
+   * Invokes the resulting *Io* **(b)**, and returns its result.
    * *RealWorld* is passed around, to mimic how Haskell uses it in theory; in practice it is optimized away by the Haskell compiler.
 
 ```
 public static 
-IoMonad<TOut>
+Io<TOut>
 Bind<TIn, TOut>(
-    IoMonad<TIn>        ioMonad,
+    Io<TIn>        io,
     Func<
         TIn, 
-        IoMonad<TOut>>  getNextIoMonad)
+        Io<TOut>>  getNextIo)
 {
     return 
         realWorld => 
         {
-            // invoke the ioMonad, by passing it the RealWorld
-            var resultIoMonad = ioMonad(realWorld);    
+            // invoke the IO, by passing it the RealWorld
+            IoResult<TIn> 
+            resultOfIo = io(realWorld);    
 
-            // get the next IO monad, by calling getNextIoMonad, with the result of the first IO action
-            var nextIoMonad = getNextIoMonad(resultIoMonad.Value);  
+            // get the next IO monad, by calling getNextIo, with the result of the first IO action
+            Io<TOut> 
+            nextIo = getNextIo(resultOfIo.Value);  
 
-            // invoke the nextiIoMonad, by passing it the RealWorld, returned by the first IO action 
-            var result = nextIoMonad(resultIoMonad.RealWorld);   
+            // invoke the nextIo, by passing it the RealWorld which was returned by the first IO action 
+            IoResult<TOut> 
+            result = nextIo(resultOfIo.RealWorld);   
 
             return result;
         };
