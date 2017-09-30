@@ -1,6 +1,6 @@
 ﻿using System;
 using static HaskellIoMonadInCSharp.IoFunctions;
-using static HaskellIoMonadInCSharp.IoMonad;
+using static HaskellIoMonadInCSharp.IoBuilder;
 
 namespace HaskellIoMonadInCSharp
 {

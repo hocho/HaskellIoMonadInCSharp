@@ -3,25 +3,28 @@
 namespace HaskellIoMonadInCSharp
 {
     /// <summary>
-    /// The IoMonad is really a delegate - a function which performs IO
+    /// The Io Monad is really a delegate - a function which performs IO
     /// </summary>
-    public delegate IoResult<T> IoMonad<T>(RealWorld realWorld);
+    public delegate 
+    IoResult<T> 
+    Io<T>(
+        RealWorld   realWorld);
 
     /// <summary>
     /// The bind and result methods of the IO Monad
     /// </summary>
-    public static class IoMonad 
+    public static class IoBuilder 
     {
         public static Unit      UnitValue      = new Unit();
         public static RealWorld RealWorldValue = new RealWorld();
 
         public static 
-        IoMonad<TOut>
+        Io<TOut>
         Bind<TIn, TOut>(
-            IoMonad<TIn>        ioMonad,
+            Io<TIn>        ioMonad,
             Func<
                 TIn, 
-                IoMonad<TOut>>  getNextIoMonad)
+                Io<TOut>>  getNextIoMonad)
         {
             return 
                 realWorld => 
@@ -40,11 +43,11 @@ namespace HaskellIoMonadInCSharp
         }
 
         /// <summary>
-        /// Lift a function into an InMonad by wrapping it into another function which takes a real world and 
+        /// Lift a function into an Io by wrapping it into another function which takes a real world and 
         /// returns an IoResult
         /// </summary>
         public static
-        IoMonad<T>
+        Io<T>
         Return<T>(
             Func<T>           func)
         {

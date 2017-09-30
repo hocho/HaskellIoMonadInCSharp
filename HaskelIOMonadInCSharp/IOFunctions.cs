@@ -1,5 +1,5 @@
 ﻿using System;
-using static HaskellIoMonadInCSharp.IoMonad;
+using static HaskellIoMonadInCSharp.IoBuilder;
 
 namespace HaskellIoMonadInCSharp
 {
@@ -9,7 +9,7 @@ namespace HaskellIoMonadInCSharp
         /// Converts an read line, into an IoMonad, using return
         /// </summary>
         public static 
-        IoMonad<string>
+        Io<string>
         GetLn()
         {
             return 
@@ -21,7 +21,7 @@ namespace HaskellIoMonadInCSharp
         /// Converts a write line, into an IoMonad, using return
         /// </summary>
         public static 
-        IoMonad<Unit>
+        Io<Unit>
         PutStrLn(
             string str)
         {
