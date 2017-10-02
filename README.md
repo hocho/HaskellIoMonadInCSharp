@@ -1,4 +1,4 @@
-# Understand the Haskell IO Monad using CSharp
+# Emulating the Haskell IO Monad in CSharp
 
 [Check out this page, if you are unfamiliar with Haskell IO Monads and their raison d'être](https://wiki.haskell.org/IO_inside#.27.3E.3E.3D.27_and_.27do.27_notation)
 
