@@ -31,7 +31,7 @@ namespace HaskellIoMonadInCSharp
             Console.WriteLine("Example 1.");
             Console.WriteLine("---------------------------------------------------------------------");
             Console.WriteLine("GetLn");
-            Console.WriteLine(@"PutStrLn(""Monadic hello to "" + line");
+            Console.WriteLine(@"PutStrLn(""Monadic hello to "" + line)");
             Console.WriteLine();
 
             Bind(
