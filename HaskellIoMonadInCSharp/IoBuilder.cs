@@ -7,8 +7,8 @@ namespace HaskellIoMonadInCSharp
     /// </summary>
     public static class IoBuilder 
     {
-        public static Unit      UnitValue      = new Unit();
-        public static RealWorld RealWorldValue = new RealWorld();
+        public static readonly Unit      UnitValue      = new Unit();
+        public static readonly RealWorld RealWorldValue = new RealWorld();
 
         public static 
         Io<TOut>
@@ -18,6 +18,7 @@ namespace HaskellIoMonadInCSharp
                 TIn, 
                 Io<TOut>>  getNextIo)
         {
+            // Bind returns an IO which is a delegate
             return 
                 realWorld => 
                 {

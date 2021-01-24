@@ -9,7 +9,7 @@ namespace HaskellIoMonadInCSharp
     /// </summary>
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Example1();
             Example2();

@@ -1,5 +1,5 @@
-﻿using System;
-using static HaskellIoMonadInCSharp.IoBuilder;
+﻿using static HaskellIoMonadInCSharp.IoBuilder;
+using static System.Console;
 
 namespace HaskellIoMonadInCSharp
 {
@@ -14,7 +14,7 @@ namespace HaskellIoMonadInCSharp
         {
             return 
                 Return(
-                    () => Console.ReadLine());
+                    () => ReadLine());
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace HaskellIoMonadInCSharp
                 Return(
                     () => 
                         {  
-                            Console.WriteLine(str); 
+                            WriteLine(str); 
 
                             return UnitValue; 
                         });
