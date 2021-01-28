@@ -10,7 +10,7 @@ namespace HaskellIoMonadInCSharp
         /// </summary>
         public static 
         Io<string>
-        GetLn()
+        GetLine()
         {
             return 
                 Return(

@@ -23,19 +23,19 @@ namespace HaskellIoMonadInCSharp
         static void 
         Example1()
         {
-            // line <- GetLn 
+            // line <- GetLine 
             // PutStrLn("Hello Monad" + line)
 
             Console.WriteLine();
             Console.WriteLine("---------------------------------------------------------------------");
             Console.WriteLine("Example 1.");
             Console.WriteLine("---------------------------------------------------------------------");
-            Console.WriteLine("GetLn");
+            Console.WriteLine("GetLine");
             Console.WriteLine(@"PutStrLn(""Monadic hello to "" + line)");
             Console.WriteLine();
 
             Bind(
-                GetLn(),
+                GetLine(),
                 line => 
                     PutStrLn("Monadic hello to " + line))
             (RealWorldValue);
@@ -44,24 +44,24 @@ namespace HaskellIoMonadInCSharp
         static void 
         Example2()
         {
-            // line1 <- GetLn 
-            // line2 <- GetLn
+            // line1 <- GetLine 
+            // line2 <- GetLine
             // PutStrLn("Monadic hello to " + line1 + " " + line2)
 
             Console.WriteLine();
             Console.WriteLine("---------------------------------------------------------------------");
             Console.WriteLine("Example 2.");
             Console.WriteLine("---------------------------------------------------------------------");
-            Console.WriteLine("GetLn");
-            Console.WriteLine("GetLn");
+            Console.WriteLine("GetLine");
+            Console.WriteLine("GetLine");
             Console.WriteLine(@"PutStrLn(""Monadic hello to "" + line1 + "" "" + line2)");
             Console.WriteLine();
 
             Bind(
-                GetLn(),
+                GetLine(),
                 line1 =>
                         Bind(
-                            GetLn(),
+                            GetLine(),
                             line2 => 
                                 PutStrLn("Hello Monad " + line1 + " " + line2)))
             (RealWorldValue);
@@ -72,9 +72,9 @@ namespace HaskellIoMonadInCSharp
         Example3()
         {
             // PutStrLn("Enter your first name")
-            // line1 <- GetLn 
+            // line1 <- GetLine 
             // PutStrLn("Enter your last name")
-            // line2 <- GetLn 
+            // line2 <- GetLine 
             // PutStrLn("Monadic hello to " + line1 + " " + line2)
 
             Console.WriteLine();
@@ -82,9 +82,9 @@ namespace HaskellIoMonadInCSharp
             Console.WriteLine("Example 3.");
             Console.WriteLine("---------------------------------------------------------------------");
             Console.WriteLine(@"PutStrLn(""Enter your first name"")");
-            Console.WriteLine("GetLn");
+            Console.WriteLine("GetLine");
             Console.WriteLine(@"PutStrLn(""Enter your last name"")");
-            Console.WriteLine("GetLn");
+            Console.WriteLine("GetLine");
             Console.WriteLine(@"PutStrLn(""Monadic hello to "" + line1 + "" "" + line2)");
             Console.WriteLine();
 
@@ -92,13 +92,13 @@ namespace HaskellIoMonadInCSharp
                 PutStrLn("Enter your first name"),
                 _ =>
                     Bind(
-                        GetLn(),
+                        GetLine(),
                         line1 =>
                             Bind(
                                 PutStrLn("Enter your last name"),
                                 __ =>
                                     Bind(
-                                        GetLn(),
+                                        GetLine(),
                                         line2 => 
                                             PutStrLn("Monadic Hello to " + line1 + " " + line2)))))
             (RealWorldValue);
