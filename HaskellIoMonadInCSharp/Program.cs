@@ -35,7 +35,7 @@ namespace HaskellIoMonadInCSharp
             Console.WriteLine();
 
             Bind(
-                GetLine(),
+                GetLine,
                 line => 
                     PutStrLn("Monadic hello to " + line))
             (RealWorldValue);
@@ -58,10 +58,10 @@ namespace HaskellIoMonadInCSharp
             Console.WriteLine();
 
             Bind(
-                GetLine(),
+                GetLine,
                 line1 =>
                         Bind(
-                            GetLine(),
+                            GetLine,
                             line2 => 
                                 PutStrLn("Hello Monad " + line1 + " " + line2)))
             (RealWorldValue);
@@ -92,13 +92,13 @@ namespace HaskellIoMonadInCSharp
                 PutStrLn("Enter your first name"),
                 _ =>
                     Bind(
-                        GetLine(),
+                        GetLine,
                         line1 =>
                             Bind(
                                 PutStrLn("Enter your last name"),
                                 __ =>
                                     Bind(
-                                        GetLine(),
+                                        GetLine,
                                         line2 => 
                                             PutStrLn("Monadic Hello to " + line1 + " " + line2)))))
             (RealWorldValue);
