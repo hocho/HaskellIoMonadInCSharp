@@ -10,9 +10,7 @@ namespace HaskellIoMonadInCSharp
         /// </summary>
         public static 
         Io<string>
-        GetLine => 
-            Return(
-                () => ReadLine());
+        GetLine => Return(ReadLine);
 
         /// <summary>
         /// Converts a write line, into an IoMonad, using return
