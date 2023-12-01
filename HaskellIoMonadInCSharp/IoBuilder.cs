@@ -7,8 +7,8 @@ namespace HaskellIoMonadInCSharp
     /// </summary>
     public static class IoBuilder 
     {
-        public static readonly Unit      UnitValue      = new Unit();
-        public static readonly RealWorld RealWorldValue = new RealWorld();
+        public static readonly Unit      UnitValue      = new();
+        public static readonly RealWorld RealWorldValue = new();
 
         public static 
         Io<TOut>
@@ -47,6 +47,7 @@ namespace HaskellIoMonadInCSharp
             //        };
 
         }
+
 
         /// <summary>
         /// Lift a function into an Io by wrapping it into another function which takes in a RealWorld  and 
